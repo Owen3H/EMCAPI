@@ -24,6 +24,11 @@ public class PlayersEndpoint extends PostEndpoint<Resident> {
     }
 
     @Override
+    public String lookup(JsonArray queryArray, JsonObject template) {
+        return super.lookup(JSONUtil.getJsonArrayUnique(queryArray), template);
+    }
+
+    @Override
     public Resident getObjectOrNull(JsonElement element) {
         String string = JSONUtil.getJsonElementAsStringOrNull(element);
         if (string == null) throw new BadRequestResponse("Your query contains a value that is not a string");

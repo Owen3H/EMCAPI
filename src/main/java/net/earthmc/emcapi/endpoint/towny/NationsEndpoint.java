@@ -19,6 +19,11 @@ import java.util.UUID;
 public class NationsEndpoint extends PostEndpoint<Nation> {
 
     @Override
+    public String lookup(JsonArray queryArray, JsonObject template) {
+        return super.lookup(JSONUtil.getJsonArrayUnique(queryArray), template);
+    }
+
+    @Override
     public Nation getObjectOrNull(JsonElement element) {
         String string = JSONUtil.getJsonElementAsStringOrNull(element);
         if (string == null) throw new BadRequestResponse("Your query contains a value that is not a string");
