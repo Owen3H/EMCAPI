@@ -21,6 +21,11 @@ import java.util.UUID;
 public class TownsEndpoint extends PostEndpoint<Town> {
 
     @Override
+    public String lookup(JsonArray queryArray, JsonObject template) {
+        return super.lookup(JSONUtil.getJsonArrayUnique(queryArray), template);
+    }
+
+    @Override
     public Town getObjectOrNull(JsonElement element) {
         String string = JSONUtil.getJsonElementAsStringOrNull(element);
         if (string == null) throw new BadRequestResponse("Your query contains a value that is not a string");

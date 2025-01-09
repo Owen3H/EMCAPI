@@ -3,7 +3,22 @@ package net.earthmc.emcapi.util;
 import com.google.gson.*;
 import io.javalin.http.BadRequestResponse;
 
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class JSONUtil {
+
+    public static JsonArray getJsonArrayUnique(JsonArray arr) {
+        ConcurrentHashMap<JsonElement, Boolean> seen = new ConcurrentHashMap<>();
+        List<JsonElement> unique = arr.asList().parallelStream()
+                .filter(element -> seen.putIfAbsent(element, Boolean.TRUE) == null)
+                .toList();
+
+        JsonArray resultArr = new JsonArray();
+        unique.forEach(resultArr::add);
+
+        return resultArr;
+    }
 
     public static JsonObject getJsonObjectFromString(String string) {
         try {

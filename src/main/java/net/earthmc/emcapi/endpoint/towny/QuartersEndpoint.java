@@ -18,6 +18,11 @@ import java.util.UUID;
 public class QuartersEndpoint extends PostEndpoint<Quarter> {
 
     @Override
+    public String lookup(JsonArray queryArray, JsonObject template) {
+        return super.lookup(JSONUtil.getJsonArrayUnique(queryArray), template);
+    }
+
+    @Override
     public Quarter getObjectOrNull(JsonElement element) {
         String string = JSONUtil.getJsonElementAsStringOrNull(element);
         if (string == null) throw new BadRequestResponse("Your query contains a value that is not a string");
